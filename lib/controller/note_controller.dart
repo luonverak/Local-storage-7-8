@@ -14,4 +14,15 @@ class NoteController {
     List<Map<String, dynamic>> result = await db.query(_service.table);
     return result.map((e) => NoteModel.toJson(e)).toList();
   }
+
+  Future<void> updateData(NoteModel model) async {
+    final db = await _service.initializeData();
+    await db.update(_service.table, model.fromJson(),
+        where: 'id=?', whereArgs: [model.id]);
+  }
+
+  Future<void> deleteData(int id) async {
+    final db = await _service.initializeData();
+    await db.delete(_service.table, where: 'id=?', whereArgs: [id]);
+  }
 }

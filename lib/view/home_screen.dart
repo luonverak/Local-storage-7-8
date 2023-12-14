@@ -86,7 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AddEditScreen(),
+                                builder: (context) =>
+                                    AddEditScreen(noteModel: item),
                               ),
                             );
                           },
@@ -97,7 +98,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         SlidableAction(
                           borderRadius: BorderRadius.circular(10),
-                          onPressed: (value) {},
+                          onPressed: (value) async {
+                            await NoteController().deleteData(item.id).then(
+                                  (value) => refresh(),
+                                );
+                          },
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
@@ -122,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Text(
                                 item.description,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                 ),
                               ),
